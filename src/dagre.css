@@ -1,0 +1,43 @@
+.menu{
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 10;
+    top:0;
+    box-shadow: 1px 1px 13px #ccc;
+    text-align: center;
+}
+select{
+    width: 90px;
+    height: 25px;
+    margin-top: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.delete-btn{
+    margin-top: 10px!important;
+    width: 90px;
+    height: 22px;
+    margin-top: 5px;
+    font-size: 12px;
+    background-color: #ff4d4f;
+    color: #fff;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.save-btn{
+    margin-top: 10px!important;
+    width: 90px;
+    height: 22px;
+    margin-top: 5px;
+    font-size: 12px;
+    background-color: #0170fe;
+    color: #fff;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
