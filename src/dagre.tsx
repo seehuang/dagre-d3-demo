@@ -547,6 +547,7 @@ class DagreD3 extends React.Component<Props,State>{
           <p>ID：{this.state.curId}</p>
          
         </Drawer>
+        
       </div>
   );
   }
