@@ -12,7 +12,7 @@ select{
     width: 90px;
     height: 25px;
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 12px!important;
     cursor: pointer;
 }
 
@@ -40,4 +40,12 @@ select{
     border-radius: 2px;
     border: none;
     cursor: pointer;
+}
+.node-style{
+    position: relative;
+}
+.node-style::before{
+    position: absolute;
+    content:'\260E';
+    font-size: 16px;
 }

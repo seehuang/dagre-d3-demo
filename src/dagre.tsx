@@ -4,7 +4,7 @@ import * as dagreD3 from 'dagre-d3';
 import * as d3 from 'd3';
 import {graphlib} from 'dagre-d3'
 import './dagre.css'
-
+import { Drawer } from 'antd';
 interface nodes{
   [key:string]:Object
 }
@@ -40,6 +40,7 @@ interface State{
     addChildValue:string,
     addSiblingValue:string,
     nodeChilds:Array<Array<string>>,
+    drawVisible:boolean
 }
 
 class DagreD3 extends React.Component<Props,State>{
@@ -47,6 +48,7 @@ class DagreD3 extends React.Component<Props,State>{
   nodeTreeInner:React.RefObject<SVGGElement> = React.createRef()
   littleMenu:React.RefObject<HTMLDivElement> = React.createRef()
   g:graphlib.Graph= new dagreD3.graphlib.Graph().setGraph({rankdir:'LR'});
+  renderGraph:any =  new dagreD3.render();
   svg:any = null
   inner:any = null
   body:any = null
@@ -79,7 +81,8 @@ class DagreD3 extends React.Component<Props,State>{
          1: { label: 'Begin', style: 'fill: rgb(80, 194, 138);' },
       },
       edges:[],
-      nodeChilds:[]
+      nodeChilds:[],
+      drawVisible:false
     }
   }
 
@@ -162,8 +165,8 @@ class DagreD3 extends React.Component<Props,State>{
           nodes:ns,
           edges:ess
         },()=>{
-          let render = new dagreD3.render();
-          render(this.inner, this.g);
+          //this.renderGraph(this.inner, this.g);
+          this.renderDag()
           this.hiddenMenu()
         })
       }
@@ -203,8 +206,8 @@ class DagreD3 extends React.Component<Props,State>{
           nodes:ns,
           edges:ess
         },()=>{
-          let render = new dagreD3.render();
-          render(this.inner, this.g);
+          //this.renderGraph(this.inner, this.g);
+          this.renderDag()
           this.hiddenMenu()
         })
       }
@@ -235,13 +238,11 @@ class DagreD3 extends React.Component<Props,State>{
         nodes:ns,
         edges:ess
       },()=>{
-        let render = new dagreD3.render();
-        render(this.inner, this.g);
+        this.renderDag()
+       // this.renderGraph(this.inner, this.g);
         this.hiddenMenu()
       })
     }
-
-    
   }
   
   findChild(id:string){
@@ -426,17 +427,22 @@ class DagreD3 extends React.Component<Props,State>{
     )
   }
 
+  drawVisibleClose(){
+    this.setState({
+      drawVisible:false
+    })
+  }
+
   renderDag(nodes:nodes = this.state.nodes, edges:Array<edge>=this.state.edges):void{
       let svg:any = this.svg;
       let inner:any = this.inner
-      const {onNodeClick, interactive=true, fit, onNodeMouseMove}  = this.props
+      const {onNodeClick, interactive=false, fit=false, onNodeMouseMove}  = this.props
       
       for (let [id, node] of Object.entries(nodes))
           this.g.setNode(id, node as any);
       for (let edge of edges){
-          this.g.setEdge(edge[0], edge[1], edge[2]); // from, to, props
+          this.g.setEdge(edge[0], edge[1], edge[2]); 
       }
-      // Set up an SVG group so that we can translate the final graph.
       // set up zoom support
       if (interactive) {
           let zoom = d3.zoom().on("zoom",
@@ -444,10 +450,9 @@ class DagreD3 extends React.Component<Props,State>{
           svg.call(zoom);
       }
       // Create the renderer
-      let render = new dagreD3.render();
+      //let render = new dagreD3.render();
       // Run the renderer. This is what draws the final graph.
-      render(inner, this.g);
-      // TODO add padding?
+      this.renderGraph(inner, this.g);
       if (fit) {
           let {height: gHeight, width: gWidth} = this.g.graph();
           let transX = 100;
@@ -464,8 +469,11 @@ class DagreD3 extends React.Component<Props,State>{
         svg.selectAll('.dagre-d3 .node')
         .on('mousemove', function () {
         })
-        .on('click', function () {
-          alert('触发点击事件')
+        .on('click', function (id:string) {
+          _this.setState({
+            drawVisible:true,
+            curId:id,
+          })
         })
         .on('contextmenu', function (id:string) {
           d3.event.preventDefault()
@@ -529,6 +537,16 @@ class DagreD3 extends React.Component<Props,State>{
         {this.renderMenu()}
         <br/>
         <button className="save-btn" onClick={()=>this.saveData()}>保存数据</button>
+        <Drawer
+          title={this.state.curId}
+          placement="right"
+          closable={false}
+          onClose={()=>this.drawVisibleClose()}
+          visible={this.state.drawVisible}
+        >
+          <p>ID：{this.state.curId}</p>
+         
+        </Drawer>
       </div>
   );
   }

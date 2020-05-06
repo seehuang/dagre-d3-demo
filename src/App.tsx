@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import DagreD3,{d3} from './dagre'
+import 'antd/dist/antd.css'; 
 
 class App extends React.Component{
 
