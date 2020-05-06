@@ -92,8 +92,8 @@ class DagreD3 extends React.Component<Props,State>{
       return
     }
     const {nodes,edges,curId}  = this.state
-    let newNodes = JSON.parse(JSON.stringify(nodes))
-    let newEdges = JSON.parse(JSON.stringify(edges))
+    let newNodes = nodes
+    let newEdges = edges
     const generateId = this.randam()
     newNodes[generateId] = { label: action, style: 'fill: rgb(204, 230, 255);' }
     let addEdges = [curId,generateId,{ style: 'stroke: rgb(214, 214, 214); fill: none', curve: d3.curveBasis }]
@@ -113,8 +113,8 @@ class DagreD3 extends React.Component<Props,State>{
       return
     }
     const {nodes,edges}  = this.state
-    let newNodes = JSON.parse(JSON.stringify(nodes))
-    let newEdges = JSON.parse(JSON.stringify(edges))
+    let newNodes = nodes
+    let newEdges = edges
     const generateId = this.randam()
     newNodes[generateId] = { label: action, style: 'fill: rgb(204, 230, 255);' }
     const arr = this.getPreNextNodes()
