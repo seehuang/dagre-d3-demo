@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import * as dagreD3 from 'dagre-d3';
 import * as d3 from 'd3';
 import {graphlib} from 'dagre-d3'
-import './dagre.css'
-import { Drawer } from 'antd';
+import './dagre.scss'
+import { Drawer,Button,notification} from 'antd';
 interface nodes{
   [key:string]:Object
 }
@@ -61,7 +61,7 @@ class DagreD3 extends React.Component<Props,State>{
         display:'none'
       },
       actions:[
-        {id:1,name:'step1'},
+        {id:1,name:'step1step1step1step1'},
         {id:2,name:'step2'},
         {id:3,name:'step3'},
         {id:4,name:'step4'},
@@ -374,6 +374,12 @@ class DagreD3 extends React.Component<Props,State>{
     this.body = d3.select('#root');
     const {nodes,edges}  = this.state
     this.renderDag(nodes,edges);
+
+    notification['info']({
+      message: '对节点鼠标右键添加节点',
+      description:'',
+      duration:20
+    });
   }
 
   hiddenMenu():void{
@@ -536,7 +542,7 @@ class DagreD3 extends React.Component<Props,State>{
         </svg>
         {this.renderMenu()}
         <br/>
-        <button className="save-btn" onClick={()=>this.saveData()}>保存数据</button>
+        <Button type="primary" onClick={()=>this.saveData()}>保存数据（浏览器控制台展示）</Button>
         <Drawer
           title={this.state.curId}
           placement="right"
