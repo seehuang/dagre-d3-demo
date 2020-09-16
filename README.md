@@ -51,5 +51,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 1
 2
+<<<<<<< HEAD
 3
 4
+=======
+3
+>>>>>>> 0f11f88b86d5e42da3fd130f637dcda2cc33b84c
