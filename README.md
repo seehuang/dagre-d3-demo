@@ -47,8 +47,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 g1
 
-
-1
-dd2
-
-dd3
+dm1
